@@ -4,17 +4,9 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 EXPOSE 80
 
-
-
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["CarDealer.Client/CarDealer.Client.csproj", "CarDealer.Client/"]
-
-COPY ./devops/zscaler-root.cer /etc/ssl/certs/zscaler-root.cer
-WORKDIR /etc/ssl/certs
-RUN openssl x509 -inform DER -in zscaler-root.cer -out zscaler-root.crt
-RUN update-ca-certificates
-WORKDIR /src
 
 RUN dotnet restore "CarDealer.Client/CarDealer.Client.csproj"
 COPY . .
