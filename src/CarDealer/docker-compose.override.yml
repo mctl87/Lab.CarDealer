@@ -1,0 +1,31 @@
+version: '3.4'
+
+services:
+  cardealer.api:
+    container_name: cardealerapi
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=mongodb://cardealerdb:27017"
+    depends_on:
+      - cardealer.db
+    ports:
+      - "8000:80"
+
+  cardealer.client:
+    container_name: cardealerclient
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "CarDealerAPIUrl=http://cardealerapi"
+    depends_on:
+      - cardealer.db
+      - cardealer.api
+    ports:
+      - "8001:80"
+
+  cardealer.db:
+    container_name: cardealerdb
+    restart: always
+    ports:
+        - "27017:27017"
+    volumes:
+        - ${WEBAPP_STORAGE_HOME}/site:/data/db

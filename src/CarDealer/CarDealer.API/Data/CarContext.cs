@@ -1,10 +1,32 @@
-﻿using CarDealer.Client.Models;
+﻿using CarDealer.API.Models;
+using MongoDB.Driver;
 
-namespace CarDealer.Client.Data
+namespace CarDealer.API.Data
 {
-    public static class CarContext
+    public class CarContext
     {
-        public static IEnumerable<Car> Cars = new List<Car>()
+        public CarContext(IConfiguration configuration)
+        {
+            var client = new MongoClient(configuration["DatabaseSettings:ConnectionString"]);
+            //client.DropDatabase(configuration["DatabaseSettings:DatabaseName"]);
+            var db = client.GetDatabase(configuration["DatabaseSettings:DatabaseName"]);
+
+            Cars = db.GetCollection<Car>(configuration["DatabaseSettings:CollectionName"]);
+            SeedData(Cars);
+        }
+        public IMongoCollection<Car> Cars { get; }
+        private void SeedData(IMongoCollection<Car> cars)
+        {
+            bool exist = cars.Find(p => true).Any();
+            if (!exist)
+            {
+                cars.InsertManyAsync(GetPreconfiguredCars());
+            }
+        }
+
+        private IEnumerable<Car> GetPreconfiguredCars()
+        {
+            return new List<Car>()
             {
                 new Car()
                 {
@@ -49,6 +71,8 @@ namespace CarDealer.Client.Data
                     Price = 240.00M,
                 }
             };
+        }
+
 
     }
 }

@@ -1,0 +1,18 @@
+version: '3.4'
+
+services:
+  cardealer.api:
+    image: ${DOCKER_REGISTRY-}cardealerapi
+    build:
+      context: .
+      dockerfile: CarDealer.API/Dockerfile
+
+  cardealer.client:
+    image: ${DOCKER_REGISTRY-}cardealerclient
+    build:
+      context: .
+      dockerfile: CarDealer.Client/Dockerfile
+
+  cardealer.db:
+    image: mongo
+

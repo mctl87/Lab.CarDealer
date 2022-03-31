@@ -1,22 +1,26 @@
-﻿using CarDealer.Client.Data;
-using CarDealer.Client.Models;
+﻿using CarDealer.Client.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace CarDealer.Client.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly HttpClient _httpClient;
+        public HomeController(IHttpClientFactory httpClientFactory, ILogger<HomeController> logger)
         {
+            _httpClient = httpClientFactory.CreateClient("CarDealerAPIClient");
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(CarContext.Cars);
+            var response = await _httpClient.GetAsync("/car");
+            var content = await response.Content.ReadAsStringAsync();
+            var list = JsonSerializer.Deserialize<IEnumerable<Car>>(content, new JsonSerializerOptions(JsonSerializerDefaults.Web));
+            return View(list);
         }
 
         public IActionResult Privacy()

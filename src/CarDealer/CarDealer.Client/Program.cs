@@ -1,7 +1,16 @@
+using CarDealer.Client.Config;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient("CarDealerAPIClient", client => {
+    //client.BaseAddress = new Uri("http://localhost:8000");
+    client.BaseAddress = new Uri(builder.Configuration["CarDealerAPIUrl"]);
+});
+builder.Services.AddControllersWithViews().AddJsonOptions(o => {
+    o.JsonSerializerOptions.PropertyNamingPolicy = new UpperCaseNamingPolicy();
+    o.JsonSerializerOptions.WriteIndented = true;
+});
 
 var app = builder.Build();
 

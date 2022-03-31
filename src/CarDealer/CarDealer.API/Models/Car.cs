@@ -1,9 +1,12 @@
-﻿using System.Text.Json;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.IdGenerators;
 
-namespace CarDealer.Client.Models
+namespace CarDealer.API.Models
 {
     public class Car
     {
+        [BsonId(IdGenerator = typeof(CombGuidGenerator))]
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
