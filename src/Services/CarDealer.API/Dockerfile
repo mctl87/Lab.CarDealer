@@ -6,10 +6,10 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["CarDealer.API/CarDealer.API.csproj", "CarDealer.API/"]
-RUN dotnet restore "CarDealer.API/CarDealer.API.csproj"
+COPY ["CarDealer.API.csproj", ""]
+RUN dotnet restore "./CarDealer.API.csproj"
 COPY . .
-WORKDIR "/src/CarDealer.API"
+WORKDIR "/src/."
 RUN dotnet build "CarDealer.API.csproj" -c Release -o /app/build
 
 FROM build AS publish

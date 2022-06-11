@@ -6,11 +6,11 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["CarDealer.Client/CarDealer.Client.csproj", "CarDealer.Client/"]
+COPY ["CarDealer.Client.csproj", ""]
 
-RUN dotnet restore "CarDealer.Client/CarDealer.Client.csproj"
+RUN dotnet restore "./CarDealer.Client.csproj"
 COPY . .
-WORKDIR "/src/CarDealer.Client"
+WORKDIR "/src/."
 RUN dotnet build "CarDealer.Client.csproj" -c Release -o /app/build
 
 FROM build AS publish
