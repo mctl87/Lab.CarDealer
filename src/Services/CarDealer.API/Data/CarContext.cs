@@ -1,5 +1,6 @@
 ﻿using CarDealer.API.Models;
 using MongoDB.Driver;
+using MongoDB.Bson;
 
 namespace CarDealer.API.Data
 {
@@ -18,6 +19,7 @@ namespace CarDealer.API.Data
         private void SeedData(IMongoCollection<Car> cars)
         {
             bool exist = cars.Find(p => true).Any();
+            //cars.DeleteMany(new BsonDocument());
             if (!exist)
             {
                 cars.InsertManyAsync(GetPreconfiguredCars());
@@ -30,45 +32,45 @@ namespace CarDealer.API.Data
             {
                 new Car()
                 {
-                    Name = "IPhone X",
-                    Description = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
+                    Name = "Renault Kadjar",
+                    Description = "Renault Kadjar 1.6 Energy TCe Intens",
                     ImageFile = "product-1.png",
-                    Price = 950.00M,
+                    Price = 64000.99M,
                 },
                 new  Car()
                 {
-                    Name = "Samsung 10",
-                    Description = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
+                    Name = "Volkswagen Tiguan",
+                    Description = "Volkswagen Tiguan 2.0 TDI 4Mot Sport&Style DSG",
                     ImageFile = "product-2.png",
-                    Price = 840.00M,
+                    Price = 52900.00M,
                 },
                 new Car()
                 {
-                    Name = "Huawei Plus",
-                    Description = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
+                    Name = "Audi Q7",
+                    Description = "Audi Q7 3.0 TDI ultra quattro tiptronic",
                     ImageFile = "product-3.png",
-                    Price = 650.00M,
+                    Price = 245998.00M,
                 },
                 new Car()
                 {
-                    Name = "Xiaomi Mi 9",
-                    Description = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
+                    Name = "Alfa Romeo Giulia",
+                    Description = "Alfa Romeo Giulia 2.0 Turbo Veloce TI Q4",
                     ImageFile = "product-4.png",
-                    Price = 470.00M,
+                    Price = 165000.00M,
                 },
                 new Car()
                 {
-                    Name = "HTC U11+ Plus",
-                    Description = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
+                    Name = "Porsche Cayenne",
+                    Description = "Porsche Cayenne S Diesel",
                     ImageFile = "product-5.png",
-                    Price = 380.00M,
+                    Price = 298000.00M,
                 },
                 new Car()
                 {
-                    Name = "LG G7 ThinQ EndofCourse",
-                    Description = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
+                    Name = "Škoda Octavia",
+                    Description = "Škoda Octavia 1.6 TDI SCR Ambition DSG",
                     ImageFile = "product-6.png",
-                    Price = 240.00M,
+                    Price = 59900.00M,
                 }
             };
         }

@@ -4,14 +4,14 @@ services:
   cardealer.api:
     image: ${DOCKER_REGISTRY-}cardealerapi
     build:
-      context: .
-      dockerfile: Services/CarDealer.API/Dockerfile
+      context: ./Services/CarDealer.API
+      dockerfile: Dockerfile
 
   cardealer.client:
     image: ${DOCKER_REGISTRY-}cardealerclient
     build:
-      context: .
-      dockerfile: Clients/CarDealer.Client/Dockerfile
+      context: ./Clients/CarDealer.Client
+      dockerfile: Dockerfile
 
   cardealer.db:
     image: mongo
